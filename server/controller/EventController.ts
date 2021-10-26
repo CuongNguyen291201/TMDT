@@ -10,7 +10,7 @@ const eventController = {
             const data = await Event.findOne({ _id: string })
             return res.status(200).json(data)
         } catch (error: any) {
-            return res.json(500).json({ msg: error.message })
+            return res.status(500).json({ msg: error.message })
         }
     },
 
@@ -19,7 +19,7 @@ const eventController = {
             const data = await Event.find({opened: true})
             return res.status(200).json(data)
         } catch (error: any) {
-            return res.json(500).json({ msg: error.message })
+            return res.status(500).json({ msg: error.message })
         }
     },
 
@@ -30,7 +30,7 @@ const eventController = {
             await newEvent.save()
             return res.status(200).json({msg: "Create event success!!"})
         } catch (error: any) {
-            return res.json(500).json({ msg: error.message })
+            return res.status(500).json({ msg: error.message })
         }
     },
 
@@ -41,7 +41,7 @@ const eventController = {
             const newEvent = await Event.findByIdAndUpdate({_id}, args)
             return res.status(200).json({msg: "Update event success!!"})
         } catch (error: any) {
-            return res.json(500).json({ msg: error.message })
+            return res.status(500).json({ msg: error.message })
         }
     },
 
