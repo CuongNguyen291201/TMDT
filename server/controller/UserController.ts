@@ -45,6 +45,48 @@ const userController = {
         } catch (error: any) {
             return res.status(500).json({msg: error.message})
         }
+    },
+    login: async (req: Request, res: Response) => {
+        try {
+            const { email, password } = req.body
+
+            const user = await User.findOne({email})
+            if (!user) return res.status(400).json({msg: "User doesn't exist !!"})
+
+            const checkPass = await bcrypt.compare(password as string, user.password as string)
+            if (!checkPass) return res.status(400).json({msg: "Incorrect password !!"})
+            
+            const access_token = createAccessToken({id: user._id})
+            const refresh_token = createRefreshToken({id: user._id})
+
+            res.cookie('refreshtoken', refresh_token, {
+                httpOnly: true,
+                path: '/api/v1/refresh_token',
+                maxAge: 7*24*60*60*1000  // 7 days
+            })
+
+            return res.status(200).json({
+                msg: "Login success !!",
+                accessToken: access_token,
+                refreshToken: refresh_token,
+                user_id: user._id,
+                user_name: user.name
+            })
+
+        } catch (error: any) {
+            return res.status(500).json({msg: error.messsage})
+        }
+    },
+    logout: async (req: Request, res: Response) => {
+        try {
+            res.clearCookie('refreshtoken', {
+                path: '/api/v1/refresh_token'
+            })
+            return res.status(200).json({msg: "Logout success !!"})
+
+        } catch (error: any) {
+            return res.status(500).json({msg: error.message})
+        }
     }
 }
 
