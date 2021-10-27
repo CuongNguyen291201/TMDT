@@ -51,7 +51,11 @@ const eventController = {
             const event = await Event.findByIdAndUpdate({_id}, {opened: false})
             return res.status(200).json({msg: "Delete event success!!"})
         } catch (error: any) {
+<<<<<<< HEAD
             return res.status(500).json({ msg: error.message })
+=======
+            return res.json(500).json({ msg: error.message })
+>>>>>>> main
         }
     }
 }
