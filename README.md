@@ -1,28 +1,12 @@
  Event-API
 
- event {
- 
-    name: String,
-    
-    shortDescription: String,
-    
-    description: String,
-    
-    image: String,
-    
-    publishDate: Number,
-    
-    exprireDate: Number,
-    
-    opened?: Boolean
-}
 
- GET("/get-event") => truyền _id lấy event theo _id
+ GET("/get-event")
  
- GET("/get-all-events") => trả về tất cả event
+ GET("/get-all-events")
  
- POST("/create-event") => truyền event lên
+ POST("/create-event")
  
- POST("/update-event") => truyền event và _id
+ POST("/update-event")
  
- POST("/delete-event") => truyền _id 
+ POST("/delete-event")
