@@ -35,7 +35,7 @@ const userController = {
 
             res.cookie('refreshtoken', refresh_token, {
                 httpOnly: true,
-                path: '/api/v1/refresh_token',
+                path: '/api/refresh_token',
                 maxAge: 7*24*60*60*1000  // 7 days
             })
 
@@ -61,7 +61,7 @@ const userController = {
 
             res.cookie('refreshtoken', refresh_token, {
                 httpOnly: true,
-                path: '/api/v1/refresh_token',
+                path: '/api/refresh_token',
                 maxAge: 7*24*60*60*1000  // 7 days
             })
 
@@ -80,7 +80,7 @@ const userController = {
     logout: async (req: Request, res: Response) => {
         try {
             res.clearCookie('refreshtoken', {
-                path: '/api/v1/refresh_token'
+                path: '/api/refresh_token'
             })
             return res.status(200).json({msg: "Logout success !!"})
 

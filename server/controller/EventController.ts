@@ -24,14 +24,15 @@ const eventController = {
     },
 
     createEvent: async (req: Request, res: Response) => {
-        try {
-            const reqBody = <IEvent> req.body
-            const newEvent = await Event.create(reqBody)
-            await newEvent.save()
-            return res.status(200).json({msg: "Create event success!!"})
-        } catch (error: any) {
-            return res.status(500).json({ msg: error.message })
-        }
+        console.log(req.body)
+        // try {
+        //     const reqBody = <IEvent> req.body
+        //     const newEvent = await Event.create(reqBody)
+        //     await newEvent.save()
+        //     return res.status(200).json({msg: "Create event success!!"})
+        // } catch (error: any) {
+        //     return res.status(500).json({ msg: error.message })
+        // }
     },
 
     updateEvent: async (req: Request, res: Response) => {

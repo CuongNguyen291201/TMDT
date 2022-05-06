@@ -18,7 +18,7 @@ app.use(cookieParser())
 
 
 // Router
-app.use('/api/v1', apiRouters)
+app.use('/api', apiRouters)
 
 
 
