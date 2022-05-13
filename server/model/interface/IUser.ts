@@ -3,5 +3,6 @@ export interface IUser {
     email: String,
     password: String,
     role?: Number,
-    avatar?: String
+    avatar?: String,
+    cart: []
 }

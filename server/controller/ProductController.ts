@@ -12,7 +12,7 @@ const productController = {
   },
   getProductById: async (req: Request, res: Response) => {
     try {
-      const _id = req.query;
+      const _id = req.body;
       const data = await Product.findOne({ _id })
       return res.status(200).json(data)
     } catch (error: any) {
@@ -21,7 +21,7 @@ const productController = {
   },
   createProduct: async (req: Request, res: Response) => {
     try {
-      const product = req.body;
+      const { product } = req.body;
       const data = await Product.create(product);
       await data.save();
 
@@ -32,9 +32,8 @@ const productController = {
   },
   updateProduct: async (req: Request, res: Response) => {
     try {
-      const _id = req.query;
-      const product = req.body;
-      const data = await Product.findByIdAndUpdate(_id, { $set: { ...product } }, { new: true })
+      const { _id, product } = req.body;
+      const data = await Product.findByIdAndUpdate(_id, { $set: product }, { new: true })
       return res.status(200).json(data)
     } catch (error: any) {
       return res.status(500).json({ msg: error.message })
@@ -42,7 +41,7 @@ const productController = {
   },
   deleteProduct: async (req: Request, res: Response) => {
     try {
-      const _id = req.query;
+      const _id = req.body;
       const data = await Product.findByIdAndDelete(_id)
 
       return res.status(200).json(data)

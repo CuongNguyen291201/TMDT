@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema({
     avatar: {
         type: String,
         default: "https://lh3.googleusercontent.com/ogw/ADea4I5HltMLHyKGnQ8ARJrW_zV1xR46TP1iSvBPkOofHQ=s83-c-mo"
+    },
+    cart: {
+        type: Array,
+        default: []
     }
 }, {
     timestamps: true
