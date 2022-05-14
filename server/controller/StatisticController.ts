@@ -4,8 +4,8 @@ import Statistic from '../model/Statistic';
 const statisticController = {
   createBill: async (req: Request, res: Response) => {
     try {
-      const bill = req.body;
-      const data = await Statistic.create(bill)
+      const { time, money } = req.body;
+      const data = await Statistic.create({time, money})
       await data.save()
       return res.status(200).json(data)
     } catch (error: any) {
