@@ -1,7 +1,5 @@
 import express from 'express'
 import authController from '../controller/AuthController'
-import userController from '../controller/UserController'
-
 
 const Router = express.Router()
 
