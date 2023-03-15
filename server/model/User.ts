@@ -20,6 +20,14 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0      // 0: user, 1: admin
     },
+    address: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: String,
+        required: true
+    },
     avatar: {
         type: String,
         default: "https://lh3.googleusercontent.com/ogw/ADea4I5HltMLHyKGnQ8ARJrW_zV1xR46TP1iSvBPkOofHQ=s83-c-mo"
