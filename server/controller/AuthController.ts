@@ -32,14 +32,17 @@ const authController = {
             const access_token = createAccessToken({ id: newUser._id })
             const refresh_token = createRefreshToken({ id: newUser._id })
 
-            res.cookie('refresh_token', refresh_token, {
+
+            console.log('refresh_token', refresh_token)
+
+            res.cookie('refreshtoken', refresh_token, {
                 httpOnly: true,
-                path: '/api/refresh_token',
+                // path: '/api/refresh_token',
                 maxAge: 30 * 24 * 60 * 60 * 1000 // 30days
             })
 
             await newUser.save()
-            return res.status(200).json({ _user: newUser, access_token })
+            return res.status(200).json({ _user: newUser, access_token, refresh_token })
 
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })
@@ -56,20 +59,21 @@ const authController = {
             const access_token = createAccessToken({ id: "" + user._id })
             const refresh_token = createRefreshToken({ id: "" + user._id })
 
-            res.cookie('refresh_token', refresh_token, {
+            res.cookie('refreshtoken', refresh_token, {
                 httpOnly: true,
-                path: '/api/refresh_token',
+                // path: '/api/refresh_token',
                 maxAge: 30 * 24 * 60 * 60 * 1000 // 30days
             })
 
-            return res.status(200).json({ _user: user, access_token })
+            return res.status(200).json({ _user: user, access_token, refresh_token })
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })
         }
     },
     logout: async (req: Request, res: Response) => {
         try {
-            res.clearCookie('refresh_token', { path: '/api/refresh_token' })
+            // res.clearCookie('refreshtoken', { path: '/api/refresh_token' })
+            res.clearCookie('refreshtoken')
             return res.status(200).json({ msg: "Logout success !!" })
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })
@@ -77,17 +81,23 @@ const authController = {
     },
     generateAccessToken: async (req: Request, res: Response) => {
         try {
-            const rfToken = req.cookies.refresh_token;
+            const rfToken = req.body.token || req.cookies['refreshtoken'];
             console.log('dd', rfToken)
             if (!rfToken) return res.status(400).json({ msg: "Please Login or Register." })
 
-            jwt.verify(rfToken, process.env.REFRESH_TOKEN_SECRET as string, async (err: any, user: any) => {
-                if (err) return res.status(400).json({ msg: "Please Login or Register." })
+            const decoded = jwt.verify(rfToken, `${process.env.REFRESH_TOKEN_SECRET}`) as TokenData;
+            console.log('decoded', decoded)
+            if (!decoded) return res.status(400).json({ msg: "Please Login or Register." })
+            const access_token = createAccessToken({ id: decoded.id })
+            const refresh_token = createRefreshToken({ id: decoded.id })
 
-                const access_token = createAccessToken({ id: user.id })
-                const _user = await User.findById(user.id);
-                return res.json({ _user, access_token })
-            })
+            const _user = await User.findById(decoded.id);
+            return res.json({ _user, access_token, refresh_token })
+            // jwt.verify(rfToken, process.env.REFRESH_TOKEN_SECRET as string, async (err: any, user: any) => {
+            //     console.log('user', user)
+            //     if (err) return res.status(400).json({ msg: "Please Login or Register." })
+
+            // })
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })
         }
@@ -125,6 +135,12 @@ const createAccessToken = (payload: object) => {
 
 const createRefreshToken = (payload: object) => {
     return jwt.sign(payload, `${process.env.REFRESH_TOKEN_SECRET}`, { expiresIn: '30d' })
+}
+
+type TokenData = {
+    id: string;
+    iat?: number;
+    exp?: number;
 }
 
 export default authController;
