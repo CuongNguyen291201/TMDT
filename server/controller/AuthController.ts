@@ -8,8 +8,6 @@ const authController = {
         try {
             const { user } = req.body
 
-            console.log('user', user, req.cookies)
-
             if (!user.name || !user.email || !user.password || !user.address || !user.phone) {
                 return res.status(400).json({ msg: "Please check it all !!" })
             }
@@ -32,9 +30,6 @@ const authController = {
             const access_token = createAccessToken({ id: newUser._id })
             const refresh_token = createRefreshToken({ id: newUser._id })
 
-
-            console.log('refresh_token', refresh_token)
-
             res.cookie('refreshtoken', refresh_token, {
                 httpOnly: true,
                 // path: '/api/refresh_token',
@@ -50,8 +45,8 @@ const authController = {
     },
     login: async (req: Request, res: Response) => {
         try {
-            const { email, password } = req.body
-            const user = await User.findOne({ email }).exec()
+            const { email, password } = req.body.user
+            const user = await User.findOne({ email: email }).exec()
             if (!user) return res.status(400).json({ msg: "User doesn't exist !!" })
             const checkPass = await bcrypt.compare(password as string, user?.password as string)
             if (!checkPass) return res.status(400).json({ msg: "Incorrect password !!" })
@@ -93,11 +88,6 @@ const authController = {
 
             const _user = await User.findById(decoded.id);
             return res.json({ _user, access_token, refresh_token })
-            // jwt.verify(rfToken, process.env.REFRESH_TOKEN_SECRET as string, async (err: any, user: any) => {
-            //     console.log('user', user)
-            //     if (err) return res.status(400).json({ msg: "Please Login or Register." })
-
-            // })
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })
         }
