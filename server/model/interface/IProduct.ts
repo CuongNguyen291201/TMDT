@@ -3,5 +3,7 @@ export interface IProduct {
   image: String,
   prict: Number,
   desc: String,
-  shortDesc: String
+  shortDesc: String,
+  category: Number,
+  imageId: String
 }
