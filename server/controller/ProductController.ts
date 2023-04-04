@@ -21,7 +21,7 @@ const productController = {
     },
     getProductByCollection: async (req: Request, res: Response) => {
         try {
-            const category = req.body;
+            const { category } = req.body;
             const data = await Product.find({ category: category })
             return res.status(200).json(data)
         } catch (error: any) {
