@@ -120,7 +120,6 @@ const userController = {
             const _id = req.body.userId;
             const { _cart } = req.body;
             const data = await User.findByIdAndUpdate(_id, { $set: { cart: _cart } })
-            console.log('dd', data)
             return res.status(200).json(data)
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })

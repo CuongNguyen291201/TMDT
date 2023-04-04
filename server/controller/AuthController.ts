@@ -77,11 +77,9 @@ const authController = {
     generateAccessToken: async (req: Request, res: Response) => {
         try {
             const rfToken = req.body.token || req.cookies['refreshtoken'];
-            console.log('dd', rfToken)
             if (!rfToken) return res.status(400).json({ msg: "Please Login or Register." })
 
             const decoded = jwt.verify(rfToken, `${process.env.REFRESH_TOKEN_SECRET}`) as TokenData;
-            console.log('decoded', decoded)
             if (!decoded) return res.status(400).json({ msg: "Please Login or Register." })
             const access_token = createAccessToken({ id: decoded.id })
             const refresh_token = createRefreshToken({ id: decoded.id })
@@ -95,8 +93,8 @@ const authController = {
     addCart: async (req: Request, res: Response) => {
         try {
             const _id = req.body.userId;
-            const { _cart } = req.body;
-            const data = await User.findByIdAndUpdate(_id, { $set: { cart: _cart } })
+            const { cart } = req.body;
+            const data = await User.findByIdAndUpdate(_id, { $set: { cart: cart } })
             return res.status(200).json(data)
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })

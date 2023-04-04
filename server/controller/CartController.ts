@@ -5,7 +5,6 @@ const cartController = {
   createCart: async (req: Request, res: Response) => {
     try {
       const cart = req.body;
-      console.log('dd', cart)
       const _cart = new Cart(cart);
       // const data = await Cart.create(cart);
       await _cart.save();
