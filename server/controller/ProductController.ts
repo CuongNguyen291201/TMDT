@@ -12,7 +12,7 @@ const productController = {
     },
     getProductById: async (req: Request, res: Response) => {
         try {
-            const _id = req.body;
+            const { _id } = req.body;
             const data = await Product.findOne({ _id })
             return res.status(200).json(data)
         } catch (error: any) {

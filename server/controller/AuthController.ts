@@ -92,8 +92,10 @@ const authController = {
     },
     addCart: async (req: Request, res: Response) => {
         try {
-            const _id = req.body.userId;
-            const { cart } = req.body;
+            const { cart, userId } = req.body;
+            const _id = userId;
+            console.log('cart', cart)
+            console.log('_id', userId)
             const data = await User.findByIdAndUpdate(_id, { $set: { cart: cart } })
             return res.status(200).json(data)
         } catch (error: any) {
