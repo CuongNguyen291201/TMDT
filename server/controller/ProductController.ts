@@ -58,7 +58,19 @@ const productController = {
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })
         }
-    }
+    },
+    searchProduct: async (req: Request, res: Response) => {
+        try {
+            const { search } = req.body;
+            const data = await Product.find({
+                name: { $regex: search }
+            });
+
+            return res.status(200).json(data)
+        } catch (error: any) {
+            return res.status(500).json({ msg: error.message })
+        }
+    },
 }
 
 export default productController

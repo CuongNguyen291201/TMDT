@@ -9,21 +9,15 @@ cloudinary.v2.config({
     api_secret: process.env.API_SECRET
 });
 
-
 const Router = express.Router()
 
 Router.post('/get-products', productController.getProducts)
-
 Router.post('/get-product', productController.getProductById)
-
 Router.post('/get-product-by-collection', productController.getProductByCollection)
-
 Router.post('/create-product', productController.createProduct)
-
 Router.post('/update-product', productController.updateProduct)
-
 Router.post('/delete-product', productController.deleteProduct)
-
+Router.post('/search-product', productController.searchProduct)
 Router.post('/delete-image-product', async (req, res) => {
     try {
         const { imageId } = req.body;
