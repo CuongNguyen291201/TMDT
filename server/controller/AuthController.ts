@@ -110,6 +110,17 @@ const authController = {
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })
         }
+    },
+    updateInfo: async (req: Request, res: Response) => {
+        try {
+            const { userInfo } = req.body;
+            const _id = userInfo._id;
+            await User.findByIdAndUpdate(_id, { $set: { name: userInfo.name, address: userInfo.address, phone: userInfo.phone } })
+            const data = await User.findOne({ _id: _id }).exec()
+            return res.status(200).json(data)
+        } catch (error: any) {
+            return res.status(500).json({ msg: error.message })
+        }
     }
 }
 

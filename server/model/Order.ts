@@ -4,7 +4,10 @@ import { IOrder } from './interface/IOrder'
 const OrderSchema = new mongoose.Schema({
     idUser: String,
     idPayment: String,
-    products: Array
+    products: {
+        type: Array,
+        default: []
+    }
 }, {
     timestamps: true
 })

@@ -22,8 +22,8 @@ const eventController = {
     },
     createOrder: async (req: Request, res: Response) => {
         try {
-            const reqBody = req.body
-            const newOrder = await Order.create(reqBody)
+            const { order } = req.body
+            const newOrder = await Order.create(order)
             await newOrder.save()
             return res.status(200).json({ msg: "Create order success!!" })
         } catch (error: any) {

@@ -9,5 +9,6 @@ Router.post('/logout', authController.logout)
 Router.post('/refresh_token', authController.generateAccessToken)
 Router.post('/add-cart', authController.addCart)
 Router.post('/get-user-by-id', authController.getUserFromId)
+Router.post('/update-user-info', authController.updateInfo)
 
 export { Router as userRouters }
