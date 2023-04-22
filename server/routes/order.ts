@@ -6,6 +6,6 @@ const Router = express.Router()
 Router.post('/get-order-by-user', orderController.getOrderByUser)
 Router.post('/get-all-orders', orderController.getAllOrders)
 Router.post('/create-order', orderController.createOrder)
-Router.post('/delete-event', orderController.deleteOrder)
+Router.post('/delete-order', orderController.deleteOrder)
 
 export { Router as orderRouters }

@@ -33,7 +33,8 @@ const eventController = {
     deleteOrder: async (req: Request, res: Response) => {
         try {
             const _id: string = req.body.orderId
-            const data = await Order.findByIdAndDelete(_id)
+            await Order.findByIdAndDelete(_id);
+            const data = await Order.find();
             return res.status(200).json(data)
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })

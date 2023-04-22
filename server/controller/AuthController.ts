@@ -121,6 +121,24 @@ const authController = {
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })
         }
+    },
+    getListUser: async (req: Request, res: Response) => {
+        try {
+            const data = await User.find();
+            return res.status(200).json(data)
+        } catch (error: any) {
+            return res.status(500).json({ msg: error.message })
+        }
+    },
+    deleteUser: async (req: Request, res: Response) => {
+        try {
+            const _id = req.body.userId;
+            await User.findByIdAndDelete(_id);
+            const data = await User.find();
+            return res.status(200).json(data)
+        } catch (error: any) {
+            return res.status(500).json({ msg: error.message })
+        }
     }
 }
 
