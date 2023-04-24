@@ -115,7 +115,7 @@ const authController = {
         try {
             const { userInfo } = req.body;
             const _id = userInfo._id;
-            await User.findByIdAndUpdate(_id, { $set: { name: userInfo.name, address: userInfo.address, phone: userInfo.phone } })
+            await User.findByIdAndUpdate(_id, { $set: { name: userInfo.name, address: userInfo.address, phone: userInfo.phone, role: userInfo.role } })
             const data = await User.findOne({ _id: _id }).exec()
             return res.status(200).json(data)
         } catch (error: any) {
