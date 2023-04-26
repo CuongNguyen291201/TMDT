@@ -62,9 +62,16 @@ const productController = {
     searchProduct: async (req: Request, res: Response) => {
         try {
             const { search } = req.body;
-            const data = await Product.find({
-                name: { $regex: search }
-            });
+            // const data = await Product.find({
+            //     name: { $regex: search }
+            // });
+
+            const allProduct = await Product.find();
+            const data = allProduct.filter(item => {
+                if (item.name.toLowerCase().includes(search)) {
+                    return item;
+                }
+            })            
 
             return res.status(200).json(data)
         } catch (error: any) {
