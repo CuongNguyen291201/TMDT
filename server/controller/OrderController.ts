@@ -39,6 +39,22 @@ const eventController = {
         } catch (error: any) {
             return res.status(500).json({ msg: error.message })
         }
+    },
+    statisticOrder: async (req: Request, res: Response) => {
+        try {
+            const { startDate, endDate } = req.body;
+
+            const data = await Order.find({
+                createdAt: {
+                    $gte: new Date(startDate - 24*60*60*1000),
+                    // $lte: new Date(endDate - 24*60*60*1000)
+                }
+            });
+
+            return res.status(200).json(data)
+        } catch (error: any) {
+            return res.status(500).json({ msg: error.message })
+        }
     }
 }
 
